@@ -18,9 +18,13 @@ function App() {
   });
 
   useEffect(() => {
+    // Fetch notes from backend (MongoDB Atlas)
     axios.get(`${API_URL}/notes`)
       .then(res => setNotes(res.data))
       .catch(err => console.error('❌ Error fetching notes:', err));
+
+    // If using PostgreSQL before, comment out that code:
+    // axios.get('http://localhost:3003/postgres-notes') ...
   }, []);
 
   const openPopup = (note = null) => {
@@ -51,6 +55,7 @@ function App() {
 
   const handleSave = () => {
     if (editNote) {
+      // Update note in MongoDB Atlas
       axios.put(`${API_URL}/notes/${editNote.id}`, noteForm)
         .then(res => {
           const updated = res.data;
@@ -60,13 +65,20 @@ function App() {
           closePopup();
         })
         .catch(err => console.error('❌ Error updating note:', err));
+
+      // Comment out PostgreSQL update if you had it:
+      // axios.put(`http://localhost:3003/postgres-notes/${editNote.id}`, ...)
     } else {
+      // Add new note in MongoDB Atlas
       axios.post(`${API_URL}/notes`, noteForm)
         .then(res => {
           setNotes(prev => [res.data, ...prev]); // prepend new note
           closePopup();
         })
         .catch(err => console.error('❌ Error adding note:', err));
+
+      // Comment out PostgreSQL add if you had it:
+      // axios.post('http://localhost:3003/postgres-notes', noteForm)
     }
   };
 
@@ -76,6 +88,9 @@ function App() {
         setNotes(prev => prev.filter(note => note.id !== id));
       })
       .catch(err => console.error('❌ Error deleting note:', err));
+
+    // Comment out PostgreSQL delete if you had it:
+    // axios.delete(`http://localhost:3003/postgres-notes/${id}`)
   };
 
   return (
