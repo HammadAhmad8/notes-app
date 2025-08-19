@@ -7,6 +7,7 @@ import './App.css';
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3003/api';
 
 function App() {
+
   const [notes, setNotes] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [editNote, setEditNote] = useState(null);
