@@ -56,11 +56,11 @@ function App() {
   const handleSave = () => {
     if (editNote) {
       // Update note in MongoDB Atlas
-      axios.put(`${API_URL}/notes/${editNote.id}`, noteForm)
+      axios.put(`${API_URL}/notes/${editNote._id}`, noteForm) // <- fixed _id
         .then(res => {
           const updated = res.data;
           setNotes(prev =>
-            prev.map(note => (note.id === updated.id ? updated : note))
+            prev.map(note => (note._id === updated._id ? updated : note)) // <- fixed _id
           );
           closePopup();
         })
@@ -85,7 +85,7 @@ function App() {
   const handleDelete = (id) => {
     axios.delete(`${API_URL}/notes/${id}`)
       .then(() => {
-        setNotes(prev => prev.filter(note => note.id !== id));
+        setNotes(prev => prev.filter(note => note._id !== id)); // <- fixed _id
       })
       .catch(err => console.error('❌ Error deleting note:', err));
 
@@ -100,14 +100,14 @@ function App() {
 
       <div className="notes-list">
         {notes.map(note => (
-          <div key={note.id} className="note-card">
+          <div key={note._id} className="note-card"> {/* <- fixed _id */}
             <h3>{note.title}</h3>
-            <p><strong>ID:</strong> {note.id}</p>
+            <p><strong>ID:</strong> {note._id}</p> {/* <- fixed _id */}
             <p><strong>Author:</strong> {note.author}</p>
             <p>{note.description}</p>
             <div className="actions">
               <button onClick={() => openPopup(note)}>Edit</button>
-              <button onClick={() => handleDelete(note.id)}>Delete</button>
+              <button onClick={() => handleDelete(note._id)}>Delete</button> {/* <- fixed _id */}
             </div>
           </div>
         ))}
