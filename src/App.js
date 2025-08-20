@@ -4,7 +4,7 @@ import axios from 'axios';
 import './App.css';
 
 // Use env variable (set REACT_APP_API_URL in .env). Fallback to localhost if not set.
-const API_URL = process.env.REACT_APP_API_URL || 'https://my-node-api-production-8a6e.up.railway.app/api/notes';
+const API_URL = process.env.REACT_APP_API_URL || 'https://my-node-api-production-8a6e.up.railway.app/api';
 
 function App() {
 
@@ -19,6 +19,8 @@ function App() {
 
   useEffect(() => {
     // Fetch notes from backend (MongoDB Atlas)
+    // console.log(`${API_URL}/notes`)
+    console.log('url: ',process.env.REACT_APP_API_URL)
     axios.get(`${API_URL}/notes`)
       .then(res => setNotes(res.data))
       .catch(err => console.error('❌ Error fetching notes:', err));
