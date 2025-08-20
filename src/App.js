@@ -4,7 +4,7 @@ import axios from 'axios';
 import './App.css';
 
 // Use env variable (set REACT_APP_API_URL in .env). Fallback to localhost if not set.
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3003/api';
+const API_URL = process.env.REACT_APP_API_URL || 'https://my-node-api-production-8a6e.up.railway.app/api/notes';
 
 function App() {
 
